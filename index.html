@@ -1,0 +1,218 @@
+<title>Cristiano Ronaldo Club Career Analysis</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap">
+<style>
+/* Layout: header, KPI strip, club cards (with logo slots), body-part donut + finish type + free kicks, competitions with scope toggle, Portugal panel, data tables. */
+:root{
+  color-scheme:dark;
+  --bg:#0d1210; --surface:#151c19; --surface-2:#1b2420; --line:#27322d;
+  --text:#eef3f0; --text-2:#b4c0b9; --muted:#8a978f;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s6:#0ca30c; --other:#6f7c75;
+  --focus:#7fb2f0;
+  --display:"Space Grotesk",system-ui,sans-serif; --body:"Inter",system-ui,-apple-system,sans-serif;
+}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){
+  color-scheme:light;
+  --bg:#f3f6f4; --surface:#ffffff; --surface-2:#eef2ef; --line:#d9e0dc;
+  --text:#0f1814; --text-2:#46534c; --muted:#66746c;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100; --s5:#e87ba4; --s6:#008300; --other:#8c9892;
+  --focus:#2a78d6;}}
+:root[data-theme="light"]{
+  color-scheme:light;
+  --bg:#f3f6f4; --surface:#ffffff; --surface-2:#eef2ef; --line:#d9e0dc;
+  --text:#0f1814; --text-2:#46534c; --muted:#66746c;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100; --s5:#e87ba4; --s6:#008300; --other:#8c9892;
+  --focus:#2a78d6;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:14px/1.5 var(--body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 40px}
+.wrap{max-width:1180px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+h1,h2,h3{font-family:var(--display);margin:0;font-weight:600;text-wrap:balance}
+h1{font-size:clamp(24px,4vw,36px);letter-spacing:-.01em}
+h2{font-size:15px;letter-spacing:.01em}
+.sub{color:var(--text-2);margin:6px 0 0}
+.asof{display:inline-block;margin-top:10px;padding:3px 10px;border:1px solid var(--line);border-radius:999px;color:var(--muted);font-size:12px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;min-width:0}
+.card h2{margin-bottom:14px;display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.card h2 small{font:400 12px var(--body);color:var(--muted)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.kpi .l{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+.kpi .v{font:700 clamp(34px,5vw,52px)/1.1 var(--display);font-variant-numeric:tabular-nums;margin-top:4px}
+.kpi .n{color:var(--text-2);font-size:12px;margin-top:2px}
+.kpi.main{background:var(--surface-2)}
+.clubs{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.club{background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.club:focus-visible,[data-tip]:focus-visible,button:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.club .top{display:flex;align-items:center;gap:10px;min-width:0}
+.logo{width:48px;height:48px;border-radius:50%;flex:none;display:grid;place-items:center;overflow:hidden;
+  font:700 13px var(--display);color:#fff;background:var(--c);letter-spacing:.02em}
+.logo img{width:100%;height:100%;object-fit:contain;background:#fff;padding:4px}
+.club .nm{font-weight:600;line-height:1.2}
+.club .yr{color:var(--muted);font-size:12px}
+.club .g{font:700 34px/1.1 var(--display);font-variant-numeric:tabular-nums;margin-top:4px}
+.club .g span{font:400 12px var(--body);color:var(--muted);margin-left:4px}
+.track{height:8px;background:var(--line);border-radius:4px;overflow:hidden}
+.fill{height:100%;background:var(--c);border-radius:0 4px 4px 0}
+.club .pct{color:var(--text-2);font-size:12px}
+.tag{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+.bars{display:flex;flex-direction:column;gap:9px}
+.row{display:grid;grid-template-columns:minmax(96px,190px) 1fr 44px;gap:10px;align-items:center}
+.row .lb{color:var(--text-2);font-size:13px;overflow-wrap:anywhere}
+.row .vl{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
+.row .track{height:14px;background:transparent}
+.row .fill{height:14px}
+.donutwrap{display:flex;gap:18px;align-items:center;flex-wrap:wrap;justify-content:center}
+.donut{width:190px;height:190px;flex:none}
+.donut text{fill:var(--text);font-family:var(--display)}
+.legend{display:flex;flex-direction:column;gap:8px;min-width:150px;flex:1}
+.legend div{display:flex;align-items:center;gap:8px;font-size:13px}
+.legend i{width:12px;height:12px;border-radius:3px;background:var(--c);flex:none}
+.legend b{margin-left:auto;font-variant-numeric:tabular-nums}
+.legend em{font-style:normal;color:var(--muted);width:46px;text-align:right;font-variant-numeric:tabular-nums}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.seg button{background:transparent;color:var(--text-2);border:0;padding:6px 12px;font:500 13px var(--body);cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--surface-2);color:var(--text);box-shadow:inset 0 -2px 0 var(--s1)}
+.key{display:flex;gap:14px;font-size:12px;color:var(--text-2);margin-bottom:12px;flex-wrap:wrap}
+.key i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;background:var(--c)}
+.pt{display:grid;grid-template-columns:minmax(0,1fr);gap:14px}
+@media(min-width:820px){.pt{grid-template-columns:1fr 1.4fr}}
+.big{font:700 64px/1 var(--display);font-variant-numeric:tabular-nums;color:var(--s6)}
+.note{color:var(--text-2);font-size:13px;margin:8px 0 0}
+details{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 18px}
+summary{cursor:pointer;font-weight:600}
+.tables{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;margin-top:14px}
+.tscroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line)}
+td:last-child,th:last-child{text-align:right;font-variant-numeric:tabular-nums}
+caption{text-align:left;font-weight:600;padding:0 0 6px}
+.foot{color:var(--muted);font-size:12px;line-height:1.6}
+#tip{position:fixed;z-index:20;pointer-events:none;background:var(--surface-2);color:var(--text);border:1px solid var(--line);
+  border-radius:8px;padding:6px 10px;font-size:12px;box-shadow:0 6px 20px rgba(0,0,0,.3);display:none;max-width:240px}
+@media(max-width:520px){.row{grid-template-columns:1fr 40px;grid-template-areas:"lb vl" "tr tr"}.row .lb{grid-area:lb}.row .vl{grid-area:vl}.row .track{grid-area:tr}}
+@media(prefers-reduced-motion:no-preference){.fill{transition:width .5s ease}}
+/* Background photo (save your image as images/ronaldo-bg.jpeg) */
+body::before{content:"";position:fixed;inset:0;z-index:-1;
+  background:linear-gradient(color-mix(in srgb,var(--bg) 60%,transparent),color-mix(in srgb,var(--bg) 78%,transparent)),url("images/ronaldo-bg.jpeg") center top / cover no-repeat}
+.card,.kpi,details{background:color-mix(in srgb,var(--surface) 88%,transparent);backdrop-filter:blur(6px)}
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>Cristiano Ronaldo Club Career Analysis</h1>
+    <p class="sub">Every career goal by club, competition, body part and finish, plus his goals for Portugal.</p>
+    <span class="asof" id="asof"></span>
+  </header>
+
+  <section class="kpis" id="kpis" aria-label="Career totals"></section>
+
+  <section class="card" aria-labelledby="h-club">
+    <h2 id="h-club">Goals by club and country <small id="sharenote"></small></h2>
+    <div class="clubs" id="clubs"></div>
+  </section>
+
+  <section class="grid3">
+    <div class="card"><h2>Goals by body part <small>Career</small></h2>
+      <div class="donutwrap"><svg class="donut" id="donut" viewBox="0 0 200 200" role="img" aria-label="Goals by body part"></svg><div class="legend" id="legend"></div></div></div>
+    <div class="card"><h2>Goals by finish <small>Career</small></h2><div class="bars" id="finish"></div></div>
+    <div class="card"><h2>Direct free kicks by team <small id="fktotal"></small></h2><div class="bars" id="fk"></div></div>
+  </section>
+
+  <section class="card" aria-labelledby="h-comp">
+    <h2 id="h-comp">Goals by competition
+      <span class="seg" id="seg" role="group" aria-label="Competition scope">
+        <button data-s="All" aria-pressed="true">All</button><button data-s="Club" aria-pressed="false">Club</button><button data-s="Country" aria-pressed="false">Country</button></span></h2>
+    <div class="key"><span><i style="--c:var(--s1)"></i>Club competition</span><span><i style="--c:var(--s6)"></i>Portugal competition</span></div>
+    <div class="bars" id="comps"></div>
+  </section>
+
+  <section class="card" aria-labelledby="h-pt">
+    <h2 id="h-pt">Goals for Portugal <small>Men's senior team</small></h2>
+    <div class="pt"><div><div class="big" id="ptbig"></div><p class="note">Portugal's all-time leading scorer and the top scorer in men's international football. He announced his retirement from international football on 5 Nov 2026 (World Soccer Talk).</p></div>
+    <div class="bars" id="ptbars"></div></div>
+  </section>
+
+  <details><summary>View the data as tables</summary><div class="tables" id="tables"></div></details>
+
+  <p class="foot" id="foot"></p>
+</div>
+<div id="tip" role="tooltip"></div>
+
+<script>
+let D={"teams": [{"name": "Sporting CP", "slug": "sporting-cp", "type": "Club", "years": "2002-03", "goals": 5, "abbr": "SCP", "slot": 1}, {"name": "Manchester United", "slug": "manchester-united", "type": "Club", "years": "2003-09, 2021-22", "goals": 145, "abbr": "MUN", "slot": 2}, {"name": "Real Madrid", "slug": "real-madrid", "type": "Club", "years": "2009-18", "goals": 450, "abbr": "RMA", "slot": 3}, {"name": "Juventus", "slug": "juventus", "type": "Club", "years": "2018-21", "goals": 101, "abbr": "JUV", "slot": 4}, {"name": "Al Nassr", "slug": "al-nassr", "type": "Club", "years": "2023-present", "goals": 138, "abbr": "ALN", "slot": 5}, {"name": "Portugal", "slug": "portugal", "type": "Country", "years": "2003-2026", "goals": 146, "abbr": "POR", "slot": 6}], "comps": [{"name": "La Liga", "scope": "Club", "goals": 311}, {"name": "UEFA Champions League", "scope": "Club", "goals": 140}, {"name": "Saudi Pro League", "scope": "Club", "goals": 110}, {"name": "Premier League", "scope": "Club", "goals": 103}, {"name": "Serie A", "scope": "Club", "goals": 81}, {"name": "Other cups", "scope": "Club", "goals": 26}, {"name": "Copa del Rey", "scope": "Club", "goals": 22}, {"name": "AFC Champions League", "scope": "Club", "goals": 15}, {"name": "FA Cup", "scope": "Club", "goals": 13}, {"name": "Coppa Italia", "scope": "Club", "goals": 4}, {"name": "League Cup", "scope": "Club", "goals": 4}, {"name": "King's Cup", "scope": "Club", "goals": 3}, {"name": "Primeira Liga", "scope": "Club", "goals": 3}, {"name": "Europa League", "scope": "Club", "goals": 2}, {"name": "Ta\u00e7a de Portugal", "scope": "Club", "goals": 2}, {"name": "Euro qualifiers", "scope": "Country", "goals": 41}, {"name": "World Cup qualifiers", "scope": "Country", "goals": 41}, {"name": "Friendlies", "scope": "Country", "goals": 22}, {"name": "Nations League", "scope": "Country", "goals": 15}, {"name": "UEFA Euro", "scope": "Country", "goals": 14}, {"name": "World Cup", "scope": "Country", "goals": 11}, {"name": "Confederations Cup", "scope": "Country", "goals": 2}], "body": [{"name": "Right foot", "goals": 635}, {"name": "Left foot", "goals": 187}, {"name": "Header", "goals": 160}, {"name": "Other", "goals": 3}], "finish": [{"name": "Open play", "goals": 735}, {"name": "Penalties", "goals": 184}, {"name": "Direct free kicks", "goals": 66}], "fk": [{"name": "Real Madrid", "goals": 33}, {"name": "Manchester United", "goals": 15}, {"name": "Portugal", "goals": 11}, {"name": "Al Nassr", "goals": 6}, {"name": "Juventus", "goals": 1}, {"name": "Sporting CP", "goals": 0}], "total": 985, "assists": 291, "asof": "30 Oct 2026", "caps": 234, "bodyAsof": "30 Oct 2026"}; // fallback copy; data/stats.json (kept fresh by the update script) replaces it on load
+const $=s=>document.querySelector(s), fmt=n=>n.toLocaleString("en-US");
+let scope="All";
+function bars(el,rows,colorOf,max){
+  max=max||Math.max(...rows.map(r=>r.goals),1);
+  el.innerHTML=rows.map(r=>`<div class="row" tabindex="0" data-tip="${r.name}: ${r.goals} goals" style="--c:${colorOf(r)}">
+    <div class="lb">${r.name}</div><div class="track"><div class="fill" style="width:${(r.goals/max*100).toFixed(1)}%"></div></div><div class="vl">${r.goals}</div></div>`).join("");
+}
+function drawComps(s){
+  const rows=D.comps.filter(c=>s==="All"||c.scope===s).sort((a,b)=>b.goals-a.goals);
+  bars($("#comps"),rows,r=>r.scope==="Club"?"var(--s1)":"var(--s6)");
+}
+function render(d){
+  D=d;
+  const club=D.teams.filter(t=>t.type==="Club"), pt=D.teams.find(t=>t.type==="Country");
+  const clubGoals=club.reduce((a,t)=>a+t.goals,0), BT=D.body.reduce((a,b)=>a+b.goals,0);
+  const most=Math.max(...D.teams.map(t=>t.goals)), fkTotal=D.fk.reduce((a,b)=>a+b.goals,0);
+  $("#asof").textContent="Career totals as of "+D.asof;
+  $("#sharenote").textContent="Share of the "+fmt(D.total)+" career goals";
+  $("#fktotal").textContent=fkTotal+" in total";
+  $("#kpis").innerHTML=[
+   ["Career goals",D.total,"Club and country, all competitions",1],
+   ["Club goals",clubGoals,"Five clubs, 2002 to now"],
+   ["Portugal goals",pt.goals,"In "+D.caps+" caps"],
+   ["Career assists",D.assists,"All teams"]
+  ].map(k=>`<div class="kpi${k[3]?" main":""}"><div class="l">${k[0]}</div><div class="v">${fmt(k[1])}</div><div class="n">${k[2]}</div></div>`).join("");
+  $("#clubs").innerHTML=D.teams.map(t=>{
+    const pct=(t.goals/D.total*100);
+    return `<div class="club" tabindex="0" data-tip="${t.name}: ${t.goals} goals (${pct.toFixed(1)}% of career total)" style="--c:var(--s${t.slot})">
+     <div class="top"><div class="logo" data-slug="${t.slug}" data-abbr="${t.abbr}"></div>
+     <div style="min-width:0"><div class="nm">${t.name}</div><div class="yr">${t.years}</div></div></div>
+     <div class="g">${t.goals}<span>goals</span></div>
+     <div class="track"><div class="fill" style="width:${(t.goals/most*100).toFixed(1)}%"></div></div>
+     <div class="pct">${pct.toFixed(1)}% of career total</div>
+     ${t.type==="Country"?'<div class="tag">National team</div>':'<div class="tag">Club</div>'}</div>`}).join("");
+  document.querySelectorAll(".logo").forEach(el=>{
+    const img=new Image(); img.alt=el.parentElement.querySelector(".nm").textContent+" crest";
+    el.textContent=el.dataset.abbr;
+    img.onload=()=>{el.textContent="";el.appendChild(img)};
+    const exts=["png","svg","jpg","jpeg","webp"]; let i=0;
+    img.onerror=()=>{ if(++i<exts.length) img.src="logos/"+el.dataset.slug+"."+exts[i]; };
+    img.src="logos/"+el.dataset.slug+"."+exts[0];
+  });
+  bars($("#finish"),D.finish,()=>"var(--s1)");
+  bars($("#fk"),D.fk,()=>"var(--s1)");
+  const bcol=["var(--s1)","var(--s2)","var(--s3)","var(--other)"], R=70, C=2*Math.PI*R, gap=2;
+  let off=0;
+  $("#donut").innerHTML=D.body.map((b,i)=>{
+    const len=b.goals/BT*C, seg=Math.max(len-gap,0.8),
+    s=`<circle cx="100" cy="100" r="${R}" fill="none" stroke="${bcol[i]}" stroke-width="26" stroke-dasharray="${seg} ${C-seg}" stroke-dashoffset="${-off}" transform="rotate(-90 100 100)" data-tip="${b.name}: ${b.goals} goals (${(b.goals/BT*100).toFixed(1)}%)"/>`;
+    off+=len; return s}).join("")+`<text x="100" y="104" text-anchor="middle" font-size="30" font-weight="700">${BT}</text><text x="100" y="124" text-anchor="middle" font-size="11" style="fill:var(--muted)">goals</text>`;
+  $("#legend").innerHTML=D.body.map((b,i)=>`<div style="--c:${bcol[i]}"><i></i>${b.name}<b>${b.goals}</b><em>${(b.goals/BT*100).toFixed(1)}%</em></div>`).join("");
+  drawComps(scope);
+  $("#ptbig").textContent=pt.goals;
+  bars($("#ptbars"),D.comps.filter(c=>c.scope==="Country").sort((a,b)=>b.goals-a.goals),()=>"var(--s6)");
+  const tbl=(cap,h,rows)=>`<div class="tscroll"><table><caption>${cap}</caption><thead><tr><th>${h[0]}</th><th>${h[1]}</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`).join("")}</tbody></table></div>`;
+  $("#tables").innerHTML=tbl("By team",["Team","Goals"],D.teams.map(t=>[t.name,t.goals]))+
+   tbl("By competition",["Competition","Goals"],D.comps.map(c=>[c.name+" ("+c.scope+")",c.goals]))+
+   tbl("By body part",["Body part","Goals"],D.body.map(b=>[b.name,b.goals]))+
+   tbl("By finish",["Finish","Goals"],D.finish.map(b=>[b.name,b.goals]))+
+   tbl("Direct free kicks",["Team","Goals"],D.fk.map(b=>[b.name,b.goals]));
+  $("#foot").textContent="Goal totals by team and competition update automatically (last change: "+D.asof+"). Body part, finish and free-kick figures are career snapshots as of "+(D.bodyAsof||D.asof)+" and are not updated automatically. Data compiled from public goal trackers (ronaldostats.app, theroadto1000goals.com, World Soccer Talk); trackers differ by a goal or two on body part.";
+}
+$("#seg").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;
+  scope=b.dataset.s;document.querySelectorAll("#seg button").forEach(x=>x.setAttribute("aria-pressed",x===b));drawComps(scope)});
+const tip=$("#tip");
+function show(t,x,y){tip.textContent=t;tip.style.display="block";const w=tip.offsetWidth,h=tip.offsetHeight;
+  tip.style.left=Math.min(x+14,innerWidth-w-8)+"px";tip.style.top=Math.max(8,Math.min(y+14,innerHeight-h-8))+"px"}
+document.addEventListener("mousemove",e=>{const t=e.target.closest("[data-tip]");t?show(t.dataset.tip,e.clientX,e.clientY):tip.style.display="none"});
+document.addEventListener("focusin",e=>{const t=e.target.closest("[data-tip]");if(t){const r=t.getBoundingClientRect();show(t.dataset.tip,r.left,r.bottom-14)}});
+document.addEventListener("focusout",()=>tip.style.display="none");
+render(D);
+fetch("data/stats.json",{cache:"no-store"}).then(r=>r.ok?r.json():Promise.reject()).then(render).catch(()=>{});
+</script>

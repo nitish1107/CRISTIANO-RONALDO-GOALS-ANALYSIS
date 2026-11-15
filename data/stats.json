@@ -1,0 +1,233 @@
+{
+ "teams": [
+  {
+   "name": "Sporting CP",
+   "slug": "sporting-cp",
+   "type": "Club",
+   "years": "2002-03",
+   "goals": 5,
+   "abbr": "SCP",
+   "slot": 1
+  },
+  {
+   "name": "Manchester United",
+   "slug": "manchester-united",
+   "type": "Club",
+   "years": "2003-09, 2021-22",
+   "goals": 145,
+   "abbr": "MUN",
+   "slot": 2
+  },
+  {
+   "name": "Real Madrid",
+   "slug": "real-madrid",
+   "type": "Club",
+   "years": "2009-18",
+   "goals": 450,
+   "abbr": "RMA",
+   "slot": 3
+  },
+  {
+   "name": "Juventus",
+   "slug": "juventus",
+   "type": "Club",
+   "years": "2018-21",
+   "goals": 101,
+   "abbr": "JUV",
+   "slot": 4
+  },
+  {
+   "name": "Al Nassr",
+   "slug": "al-nassr",
+   "type": "Club",
+   "years": "2023-present",
+   "goals": 138,
+   "abbr": "ALN",
+   "slot": 5
+  },
+  {
+   "name": "Portugal",
+   "slug": "portugal",
+   "type": "Country",
+   "years": "2003-2026",
+   "goals": 146,
+   "abbr": "POR",
+   "slot": 6
+  }
+ ],
+ "comps": [
+  {
+   "name": "La Liga",
+   "scope": "Club",
+   "goals": 311
+  },
+  {
+   "name": "UEFA Champions League",
+   "scope": "Club",
+   "goals": 140
+  },
+  {
+   "name": "Saudi Pro League",
+   "scope": "Club",
+   "goals": 110
+  },
+  {
+   "name": "Premier League",
+   "scope": "Club",
+   "goals": 103
+  },
+  {
+   "name": "Serie A",
+   "scope": "Club",
+   "goals": 81
+  },
+  {
+   "name": "Other cups",
+   "scope": "Club",
+   "goals": 26
+  },
+  {
+   "name": "Copa del Rey",
+   "scope": "Club",
+   "goals": 22
+  },
+  {
+   "name": "AFC Champions League",
+   "scope": "Club",
+   "goals": 15
+  },
+  {
+   "name": "FA Cup",
+   "scope": "Club",
+   "goals": 13
+  },
+  {
+   "name": "Coppa Italia",
+   "scope": "Club",
+   "goals": 4
+  },
+  {
+   "name": "League Cup",
+   "scope": "Club",
+   "goals": 4
+  },
+  {
+   "name": "King's Cup",
+   "scope": "Club",
+   "goals": 3
+  },
+  {
+   "name": "Primeira Liga",
+   "scope": "Club",
+   "goals": 3
+  },
+  {
+   "name": "Europa League",
+   "scope": "Club",
+   "goals": 2
+  },
+  {
+   "name": "Ta\u00e7a de Portugal",
+   "scope": "Club",
+   "goals": 2
+  },
+  {
+   "name": "Euro qualifiers",
+   "scope": "Country",
+   "goals": 41
+  },
+  {
+   "name": "World Cup qualifiers",
+   "scope": "Country",
+   "goals": 41
+  },
+  {
+   "name": "Friendlies",
+   "scope": "Country",
+   "goals": 22
+  },
+  {
+   "name": "Nations League",
+   "scope": "Country",
+   "goals": 15
+  },
+  {
+   "name": "UEFA Euro",
+   "scope": "Country",
+   "goals": 14
+  },
+  {
+   "name": "World Cup",
+   "scope": "Country",
+   "goals": 11
+  },
+  {
+   "name": "Confederations Cup",
+   "scope": "Country",
+   "goals": 2
+  }
+ ],
+ "body": [
+  {
+   "name": "Right foot",
+   "goals": 635
+  },
+  {
+   "name": "Left foot",
+   "goals": 187
+  },
+  {
+   "name": "Header",
+   "goals": 160
+  },
+  {
+   "name": "Other",
+   "goals": 3
+  }
+ ],
+ "finish": [
+  {
+   "name": "Open play",
+   "goals": 735
+  },
+  {
+   "name": "Penalties",
+   "goals": 184
+  },
+  {
+   "name": "Direct free kicks",
+   "goals": 66
+  }
+ ],
+ "fk": [
+  {
+   "name": "Real Madrid",
+   "goals": 33
+  },
+  {
+   "name": "Manchester United",
+   "goals": 15
+  },
+  {
+   "name": "Portugal",
+   "goals": 11
+  },
+  {
+   "name": "Al Nassr",
+   "goals": 6
+  },
+  {
+   "name": "Juventus",
+   "goals": 1
+  },
+  {
+   "name": "Sporting CP",
+   "goals": 0
+  }
+ ],
+ "total": 985,
+ "assists": 291,
+ "asof": "30 Oct 2026",
+ "caps": 234,
+ "bodyAsof": "30 Oct 2026"
+}
